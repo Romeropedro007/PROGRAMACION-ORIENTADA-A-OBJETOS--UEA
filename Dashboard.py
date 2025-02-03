@@ -19,10 +19,14 @@ def mostrar_codigo(ruta_script):
 
 def ejecutar_codigo(ruta_script):
     try:
-        if os.name == 'nt':  # Windows
-            subprocess.Popen(['cmd', '/k', 'python', ruta_script])
-        else:  # Unix-based systems
-            subprocess.Popen(['xterm', '-hold', '-e', 'python3', ruta_script])
+        print(f"Ejecutando: {ruta_script}")  # Verificar la ruta antes de ejecutar
+        if os.path.exists(ruta_script):
+            if os.name == 'nt':  # Windows
+                subprocess.Popen(['cmd', '/k', 'python', ruta_script])
+            else:  # Unix-based systems
+                subprocess.Popen(['xterm', '-hold', '-e', 'python3', ruta_script])
+        else:
+            print("El archivo no existe. Verifica la ruta.")
     except Exception as e:
         print(f"Ocurrió un error al ejecutar el código: {e}")
 
@@ -41,7 +45,7 @@ def mostrar_menu():
     }
 
     while True:
-        print("\n******** Menu Principal - Dashboard *************")
+        print("\n******** Dashboard - Menú Principal *************")
         # Imprime las opciones del menú
         for key, value in opciones.items():
             print(f"{key} - {value}")
@@ -49,6 +53,7 @@ def mostrar_menu():
 
         eleccion = input("Elige un archivo para ver su contenido o '0' para salir: ")
         if eleccion == '0':
+            print("Saliendo del Dashboard...")
             break
         elif eleccion in opciones:
             # Asegura que el path sea absoluto
@@ -62,7 +67,7 @@ def mostrar_menu():
                     print("No se ejecutó el script.")
                 else:
                     print("Opción no válida. Regresando al menú de scripts.")
-                input("\nPresiona Enter para volver al menú principal.")
+                input("\nPresiona Enter para volver al Dashboard.")
         else:
             print("Opción no válida. Por favor, intenta de nuevo.")
 
